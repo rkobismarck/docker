@@ -1,0 +1,32 @@
+!/bin/bash
+
+if [ "$1" != "" ]; then
+    echo "Image name for the container."
+    echo $1
+else
+    echo "No name was supplied, please verify that you've assigned a valid name for your image."
+	exit
+fi
+
+
+echo "Hello, we're going to deploy our Docker instances like containers."
+echo "Posicionate yourself in a valid directory."
+
+cd /home/ubuntu/devops
+
+echo "Let's start Dockerizing!!!"
+
+
+echo "If a container is running with the previous image built in, we're going to stop the container."
+docker stop $(docker ps -q --filter ancestor=$1 )
+
+
+echo "Building the newest Image"
+docker build -t $1 .
+
+
+echo "Running the Docker Image in a Container"
+docker run -d -p 8080:80 $1
+
+
+echo "Up & Running"
