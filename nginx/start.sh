@@ -5,7 +5,15 @@ if [ "$1" != "" ]; then
     echo $1
 else
     echo "No name was supplied, please verify that you've assigned a valid name for your image."
-	exit
+        exit
+fi
+
+if [ "$2" != "" ]; then
+    echo "Plaase assign a valid port number for the container."
+    echo $2
+else
+    echo "No port name was supplied, please verify that you've assigned a valid port number for your image."
+        exit
 fi
 
 
@@ -26,7 +34,7 @@ docker build -t $1 .
 
 
 echo "Running the Docker Image in a Container"
-docker run -d -p 8080:80 $1
+docker run -d -p $2:80 $1
 
 
 echo "Up & Running"
